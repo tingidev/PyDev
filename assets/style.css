@@ -4,18 +4,18 @@ Found on https://github.com/STATWORX/blog/blob/master/DashApp/assets/style.css
 
 - Grid
 - Base Styles
- - Typography
- - Links
- - Buttons
- - Forms
- - Lists
- - Code
- - Tables
- - Spacing
- - Utilities
- - Clearing
- - Media Queries
- - Custom App CSS */
+- Typography
+- Links
+- Buttons
+- Forms
+- Lists
+- Code
+- Tables
+- Spacing
+- Utilities
+- Clearing
+- Media Queries
+- Custom App CSS */
 
 
 /* Grid –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -72,7 +72,7 @@ Found on https://github.com/STATWORX/blog/blob/master/DashApp/assets/style.css
       width: 56.6666666667%;
  }
   .eight.columns {
-      width: 65.3333333333%;
+      width: 69.3333333333%;
  }
   .nine.columns {
       width: 74.0%;
@@ -229,7 +229,6 @@ a:hover {
   background-color: #505050
 }
 
-
 .main-svg{
   font-family: "Open Sans Semi Bold"
 }
@@ -241,7 +240,6 @@ a:hover {
 .g-title{
   font-family: "Open Sans Semi Bold"
 }
-
 
 .button, button, input[type="submit"], input[type="reset"], input[type="button"] {
   display: inline-block;
@@ -473,6 +471,7 @@ a {
 .div-user-controls {
   padding-left: 55px;
   padding-top: 64px;
+  height: 100vh;
 }
 .div-for-dropdown {
   padding-top: 12px;
@@ -489,7 +488,12 @@ a {
 .Select-control, .Select-menu-outer, .Select-multi-value-wrapper, .select-up, .is-open .Select-control {
   background-color: #1E1E1E;
   color: white;
-
+}
+.div-gfx-controls {
+  padding-left: 55px;
+  padding-right: 55px;
+  padding-top: 64px;
+  height: 100vh;
 }
 
 #modelselector .Select-control{
