@@ -34,6 +34,7 @@ app.layout = html.Div(children=[
                 children=[
                     html.Div(
                         id='upload-div',
+                        style={'margin-right': '55px'},
                         children=[
                             html.H2('PyDev - Data Explorer and Visualizer'),
                             html.P(
@@ -51,7 +52,6 @@ app.layout = html.Div(children=[
                                     'borderStyle': 'dashed',
                                     'borderRadius': '5px',
                                     'textAlign': 'center',
-                                    'margin-right': '55px',
                                     'margin-bottom': '60px'},
                                 multiple=True
                             ),
@@ -75,13 +75,14 @@ app.layout = html.Div(children=[
                         style={
                             'margin': '55px',
                             'margin-top': '64px',
+                            'margin-bottom': '32px',
                             'borderStyle': 'dashed'}
                     ),
                     html.Div(
                         id='graph-data-upload',
                         style={
                             'margin': '55px',
-                            'margin-top': '64px',
+                            'margin-top': '32px',
                             'borderStyle': 'dashed'}
                     )
             ])
@@ -156,12 +157,23 @@ def update_table(data):
                             columns=[{'name': i, 'id': i} for i in df.columns],
                             style_as_list_view=True,
                             page_size=10,
+                            # style_table={
+                            #     'overflowX': 'auto'},
                             style_header={
                                 'backgroundColor': '#1E1E1E',
                                 'fontWeight': 'bold'},
                             style_cell={
-                                'backgroundColor': 'rgb(50, 50, 50)',
-                                'color': 'white'}
+                                'backgroundColor': '#31302F',
+                                'color': 'white',
+                                'overflow': 'hidden',
+                                'textOverflow': 'ellipsis',
+                                'maxWidth': 50},
+                            style_data_conditional=[
+                                # {'if': {'column_type': 'numeric'},
+                                #     'textAlign': 'center'},
+                                {'if': {'state': 'selected'},
+                                    'backgroundColor': '#1E1E1E'}
+                            ]
                         ),
                         html.Hr() # horizontal line
                     ],
