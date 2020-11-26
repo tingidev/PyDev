@@ -52,19 +52,16 @@ app.layout = html.Div(children=[
                                     'borderRadius': '5px',
                                     'textAlign': 'center',
                                     'margin-right': '55px',
-                                    'margin-bottom': '60px'
-                                },
+                                    'margin-bottom': '60px'},
                                 multiple=True
                             ),
-                        ]
-                    ),
+                    ]),
                     html.Div(
                         id='meta-table-div',
                         children=[],
                         style={
                             'borderStyle': 'dashed',
-                            'margin-right': '55px'
-                        }
+                            'margin-right': '55px'}
                     )
             ]),
             dcc.Store(id='memory'),
@@ -78,8 +75,14 @@ app.layout = html.Div(children=[
                         style={
                             'margin': '55px',
                             'margin-top': '64px',
-                            'borderStyle': 'dashed'
-                        }
+                            'borderStyle': 'dashed'}
+                    ),
+                    html.Div(
+                        id='graph-data-upload',
+                        style={
+                            'margin': '55px',
+                            'margin-top': '64px',
+                            'borderStyle': 'dashed'}
                     )
             ])
     ])
@@ -138,12 +141,10 @@ def update_meta_table(data, filename, date):
         ])
     return table
 
-# Callback to fill data table
+# Callback to fill main data table
 @app.callback(Output('table-data-upload', 'children'),
-                Input('memory', 'data'),
-                State('upload-data', 'filename'),
-                State('upload-data', 'last_modified'))
-def update_table(data, filename, date):
+                Input('memory', 'data'))
+def update_table(data):
     table = html.Div()
     if data:
         data = data[0]
@@ -167,6 +168,35 @@ def update_table(data, filename, date):
                     className='bg-grey',
         )
     return table
+
+# Callback to fill main data graph
+# @app.callback(Output('graph-data-upload', 'children'),
+#                 Input('memory', 'data'))
+# def update_table(data, filename, date):
+#     graph = html.Div()
+#     if data:
+#         data = data[0]
+#         df = pd.read_json(data, orient='split')
+#         table = html.Div(
+#                     children=[
+#                         dash_table.DataTable(
+#                             data=df.to_dict('records'),
+#                             columns=[{'name': i, 'id': i} for i in df.columns],
+#                             style_as_list_view=True,
+#                             page_size=10,
+#                             style_header={
+#                                 'backgroundColor': '#1E1E1E',
+#                                 'fontWeight': 'bold'},
+#                             style_cell={
+#                                 'backgroundColor': 'rgb(50, 50, 50)',
+#                                 'color': 'white'}
+#                         ),
+#                         html.Hr() # horizontal line
+#                     ],
+#                     className='bg-grey',
+#         )
+#     return table
+
 
 # Run app
 if __name__ == '__main__':
