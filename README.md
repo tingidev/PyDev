@@ -1,4 +1,4 @@
-## PyDev - Python Data Explorer and Visualizer
+## PyDev - Python Data Explorer and Visualization
 
 This Repo is an early work in progress. Its goal is to create a Python-based dashboard using Dash to visualize and explore machine-learning data files for a first parse of a new dataset.
 
@@ -8,6 +8,7 @@ This Repo is an early work in progress. Its goal is to create a Python-based das
 - Numpy
 - Pandas
 - Dash
+- Plotly
 
 ## Author
 

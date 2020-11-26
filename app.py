@@ -36,7 +36,7 @@ app.layout = html.Div(children=[
                         id='upload-div',
                         style={'margin-right': '55px'},
                         children=[
-                            html.H2('PyDev - Data Explorer and Visualizer'),
+                            html.H2('PyDev - Data Explorer and Visualization'),
                             html.P(
                                 'Perform a first-pass exploration of your machine-learning data',
                                 style={'margin-bottom': '60px'}
@@ -68,7 +68,10 @@ app.layout = html.Div(children=[
             html.Div(
                 id='right-col-div',
                 className='eight columns div-for-charts bg-grey',
-                style={'margin-left': '0%', 'borderStyle': 'dashed'},
+                style={
+                    'margin-left': '0%',
+                    'borderStyle': 'dashed',
+                    'overflow-y': 'auto'},
                 children=[
                     html.Div(
                         id='table-data-upload',
@@ -114,9 +117,9 @@ def parse_contents(contents, filename, date):
 
 # Callback to store file in Store element after upload
 @app.callback(Output('memory', 'data'),
-              Input('upload-data', 'contents'),
-              State('upload-data', 'filename'),
-              State('upload-data', 'last_modified'))
+                Input('upload-data', 'contents'),
+                State('upload-data', 'filename'),
+                State('upload-data', 'last_modified'))
 def update_output(list_of_contents, list_of_names, list_of_dates):
     if list_of_contents is not None:
         children = [
@@ -151,64 +154,58 @@ def update_table(data):
         data = data[0]
         df = pd.read_json(data, orient='split')
         table = html.Div(
-                    children=[
-                        dash_table.DataTable(
-                            data=df.to_dict('records'),
-                            columns=[{'name': i, 'id': i} for i in df.columns],
-                            style_as_list_view=True,
-                            page_size=10,
-                            # style_table={
-                            #     'overflowX': 'auto'},
-                            style_header={
-                                'backgroundColor': '#1E1E1E',
-                                'fontWeight': 'bold'},
-                            style_cell={
-                                'backgroundColor': '#31302F',
-                                'color': 'white',
-                                'overflow': 'hidden',
-                                'textOverflow': 'ellipsis',
-                                'maxWidth': 50},
-                            style_data_conditional=[
-                                # {'if': {'column_type': 'numeric'},
-                                #     'textAlign': 'center'},
-                                {'if': {'state': 'selected'},
-                                    'backgroundColor': '#1E1E1E'}
-                            ]
-                        ),
-                        html.Hr() # horizontal line
-                    ],
-                    className='bg-grey',
+            children=[
+                dash_table.DataTable(
+                    data=df.to_dict('records'),
+                    columns=[{'name': i, 'id': i} for i in df.columns],
+                    style_as_list_view=True,
+                    page_size=10,
+                    # style_table={
+                    #     'overflowX': 'auto'},
+                    style_header={
+                        'backgroundColor': '#1E1E1E',
+                        'fontWeight': 'bold'},
+                    style_cell={
+                        'backgroundColor': '#31302F',
+                        'color': 'white',
+                        'overflow': 'hidden',
+                        'textOverflow': 'ellipsis',
+                        'maxWidth': 50},
+                    style_data_conditional=[
+                        # {'if': {'column_type': 'numeric'},
+                        #     'textAlign': 'center'},
+                        {'if': {'state': 'selected'},
+                            'backgroundColor': '#1E1E1E'}
+                    ]
+                ),
+                html.Hr() # horizontal line
+            ],
+            className='bg-grey',
         )
     return table
 
 # Callback to fill main data graph
-# @app.callback(Output('graph-data-upload', 'children'),
-#                 Input('memory', 'data'))
-# def update_table(data, filename, date):
-#     graph = html.Div()
-#     if data:
-#         data = data[0]
-#         df = pd.read_json(data, orient='split')
-#         table = html.Div(
-#                     children=[
-#                         dash_table.DataTable(
-#                             data=df.to_dict('records'),
-#                             columns=[{'name': i, 'id': i} for i in df.columns],
-#                             style_as_list_view=True,
-#                             page_size=10,
-#                             style_header={
-#                                 'backgroundColor': '#1E1E1E',
-#                                 'fontWeight': 'bold'},
-#                             style_cell={
-#                                 'backgroundColor': 'rgb(50, 50, 50)',
-#                                 'color': 'white'}
-#                         ),
-#                         html.Hr() # horizontal line
-#                     ],
-#                     className='bg-grey',
-#         )
-#     return table
-
+@app.callback(Output('graph-data-upload', 'children'),
+                Input('memory', 'data'))
+def update_table(data):
+    graph = html.Div()
+    if data:
+        data = data[0]
+        df = pd.read_json(data, orient='split')
+        graph = html.Div(children=[
+            dcc.Graph(
+                config={'displayModeBar': False},
+                animate=True,
+                figure=px.line(df,
+                    x='Age',
+                    y='Survived',
+                    # color='stock',
+                    template='plotly_dark').update_layout({
+                        'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+                        'paper_bgcolor': 'rgba(0, 0, 0, 0)'})
+            ),
+        ])
+    return graph
 
 # Run app
 if __name__ == '__main__':
